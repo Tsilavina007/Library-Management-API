@@ -74,6 +74,26 @@ paths:
         '204':
           description: Book deleted successfully
 
+  /authors:
+    get:
+      summary: Retrieve authors
+      parameters:
+        - name: authorName
+          in: query
+          description: Filter by author name
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+
 components:
   schemas:
     Book:
@@ -102,3 +122,18 @@ components:
         releaseDate:
           type: string
           format: date
+    Author:
+      type: object
+      required:
+        - name
+        - sex
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sex:
+          type: string
+          enum:
+            - M
+            - F

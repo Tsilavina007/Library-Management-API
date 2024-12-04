@@ -1,1 +1,70 @@
-.
+openapi: 3.0.3
+info:
+  title: Library Management API
+  description: API for managing books and authors in a library.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /books:
+    get:
+      summary: Retrieve books
+      parameters:
+        - name: bookName
+          in: query
+          description: Filter by book name
+          required: false
+          schema:
+            type: string
+        - name: releaseDateStart
+          in: query
+          description: Filter books released after this date (YYYY-MM-DD)
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: releaseDateEnd
+          in: query
+          description: Filter books released before this date (YYYY-MM-DD)
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: A list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+
+components:
+  schemas:
+    Book:
+      type: object
+      required:
+        - bookName
+        - author
+        - pageNumbers
+        - topic
+        - releaseDate
+      properties:
+        id:
+          type: string
+        bookName:
+          type: string
+        author:
+          type: string
+        pageNumbers:
+          type: integer
+        topic:
+          type: string
+          enum:
+            - ROMANCE
+            - COMEDY
+            - OTHER
+        releaseDate:
+          type: string
+          format: date

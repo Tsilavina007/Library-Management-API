@@ -104,6 +104,17 @@ paths:
       responses:
         '201':
           description: Author created successfully
+    put:
+      summary: Update an author (idempotent)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+      responses:
+        '200':
+          description: Author updated successfully
 
 components:
   schemas:

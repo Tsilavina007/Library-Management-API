@@ -4,7 +4,8 @@ info:
   description: API for managing books and authors in a library.
   version: 1.0.0
 servers:
-  - url: http://localhost:3000
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/TsilavinaANDRIAMIHARISON/Library_Management_API/1.0.0
 paths:
   /books:
     get:

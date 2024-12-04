@@ -39,6 +39,17 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+    post:
+      summary: Create a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Book created successfully
 
 components:
   schemas:

@@ -115,6 +115,18 @@ paths:
       responses:
         '200':
           description: Author updated successfully
+    delete:
+      summary: Delete an author
+      parameters:
+        - name: id
+          in: query
+          description: The ID of the author to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Author deleted successfully
 
 components:
   schemas:

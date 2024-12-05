@@ -1,0 +1,184 @@
+openapi: 3.0.3
+info:
+  title: Library Management API
+  description: API for managing books and authors in a library.
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/TsilavinaANDRIAMIHARISON/Library_Management_API/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /books:
+    get:
+      summary: Retrieve books
+      parameters:
+      - name: bookName
+        in: query
+        description: Filter by book name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: releaseDateStart
+        in: query
+        description: Filter books released after this date (YYYY-MM-DD)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date
+      - name: releaseDateEnd
+        in: query
+        description: Filter books released before this date (YYYY-MM-DD)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date
+      responses:
+        "200":
+          description: A list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    put:
+      summary: Update a book (idempotent)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+        required: true
+      responses:
+        "200":
+          description: Book updated successfully
+    post:
+      summary: Create a new book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+        required: true
+      responses:
+        "201":
+          description: Book created successfully
+    delete:
+      summary: Delete a book
+      parameters:
+      - name: id
+        in: query
+        description: The ID of the book to delete
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Book deleted successfully
+  /authors:
+    get:
+      summary: Retrieve authors
+      parameters:
+      - name: authorName
+        in: query
+        description: Filter by author name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A list of authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+    put:
+      summary: Update an author (idempotent)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+        required: true
+      responses:
+        "200":
+          description: Author updated successfully
+    post:
+      summary: Create a new author
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+        required: true
+      responses:
+        "201":
+          description: Author created successfully
+    delete:
+      summary: Delete an author
+      parameters:
+      - name: id
+        in: query
+        description: The ID of the author to delete
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Author deleted successfully
+components:
+  schemas:
+    Book:
+      required:
+      - author
+      - bookName
+      - pageNumbers
+      - releaseDate
+      - topic
+      type: object
+      properties:
+        id:
+          type: string
+        bookName:
+          type: string
+        author:
+          type: string
+        pageNumbers:
+          type: integer
+        topic:
+          type: string
+          enum:
+          - ROMANCE
+          - COMEDY
+          - OTHER
+        releaseDate:
+          type: string
+          format: date
+    Author:
+      required:
+      - name
+      - sex
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sex:
+          type: string
+          enum:
+          - M
+          - F

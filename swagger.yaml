@@ -1,19 +1,19 @@
 openapi: 3.0.3
 info:
-  title: Library Management API
-  description: API for managing books and authors in a library.
+  title: School Management API
+  description: API for managing groups and students in a school.
   version: 1.0.0
 servers:
 - url: https://virtserver.swaggerhub.com/TsilavinaANDRIAMIHARISON/Library_Management_API/1.0.0
   description: SwaggerHub API Auto Mocking
 paths:
-  /books:
+  /groups:
     get:
-      summary: Retrieve books
+      summary: Retrieve groups
       parameters:
-      - name: bookName
+      - name: groupName
         in: query
-        description: Filter by book name
+        description: Filter by groups name
         required: false
         style: form
         explode: true
@@ -21,16 +21,7 @@ paths:
           type: string
       - name: releaseDateStart
         in: query
-        description: Filter books released after this date (YYYY-MM-DD)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: date
-      - name: releaseDateEnd
-        in: query
-        description: Filter books released before this date (YYYY-MM-DD)
+        description: Filter groups with date (YYYY)
         required: false
         style: form
         explode: true
@@ -39,41 +30,41 @@ paths:
           format: date
       responses:
         "200":
-          description: A list of books
+          description: A list of groups
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  $ref: '#/components/schemas/Group'
     put:
-      summary: Update a book (idempotent)
+      summary: Update a group (idempotent)
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref: '#/components/schemas/Group'
         required: true
       responses:
         "200":
-          description: Book updated successfully
+          description: Group updated successfully
     post:
-      summary: Create a new book
+      summary: Create a new group
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref: '#/components/schemas/Group'
         required: true
       responses:
         "201":
-          description: Book created successfully
+          description: Group created successfully
     delete:
-      summary: Delete a book
+      summary: Delete a group
       parameters:
       - name: id
         in: query
-        description: The ID of the book to delete
+        description: The ID of the group to delete
         required: true
         style: form
         explode: true
@@ -81,14 +72,14 @@ paths:
           type: string
       responses:
         "204":
-          description: Book deleted successfully
-  /authors:
+          description: Group deleted successfully
+  /students:
     get:
-      summary: Retrieve authors
+      summary: Retrieve students
       parameters:
-      - name: authorName
+      - name: group
         in: query
-        description: Filter by author name
+        description: Filter by groupName name
         required: false
         style: form
         explode: true
@@ -96,41 +87,41 @@ paths:
           type: string
       responses:
         "200":
-          description: A list of authors
+          description: A list of students
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Author'
+                  $ref: '#/components/schemas/Student'
     put:
-      summary: Update an author (idempotent)
+      summary: Update an student (idempotent)
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: '#/components/schemas/Student'
         required: true
       responses:
         "200":
-          description: Author updated successfully
+          description: Student updated successfully
     post:
-      summary: Create a new author
+      summary: Create a new Student
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: '#/components/schemas/Student'
         required: true
       responses:
         "201":
-          description: Author created successfully
+          description: Student created successfully
     delete:
-      summary: Delete an author
+      summary: Delete an student
       parameters:
       - name: id
         in: query
-        description: The ID of the author to delete
+        description: The ID of the student to delete
         required: true
         style: form
         explode: true
@@ -138,39 +129,32 @@ paths:
           type: string
       responses:
         "204":
-          description: Author deleted successfully
+          description: Student deleted successfully
 components:
   schemas:
-    Book:
+    Group:
       required:
-      - author
-      - bookName
-      - pageNumbers
-      - releaseDate
-      - topic
+      - effectif
+      - groupName
+      - promotion
+      - year
       type: object
       properties:
         id:
           type: string
-        bookName:
+        groupName:
           type: string
-        author:
-          type: string
-        pageNumbers:
-          type: integer
-        topic:
-          type: string
-          enum:
-          - ROMANCE
-          - COMEDY
-          - OTHER
-        releaseDate:
+        year:
           type: string
           format: date
-    Author:
+        promotion:
+          type: string
+        effectif:
+          type: integer
+    Student:
       required:
+      - groupName
       - name
-      - sex
       type: object
       properties:
         id:
@@ -182,3 +166,10 @@ components:
           enum:
           - M
           - F
+        birthDate:
+          type: string
+          format: date
+        ref:
+          type: string
+        groupName:
+          type: string

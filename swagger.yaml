@@ -79,6 +79,30 @@
         }
       }
     },
+    "/groups/{groupId}" : {
+      "delete" : {
+        "tags" : [ "Groups" ],
+        "summary" : "Delete a group by ID",
+        "parameters" : [ {
+          "name" : "groupId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Group deleted successfully"
+          },
+          "404" : {
+            "description" : "Group not found"
+          }
+        }
+      }
+    },
     "/students" : {
       "get" : {
         "tags" : [ "Students" ],
@@ -135,6 +159,30 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/students/{studentId}" : {
+      "delete" : {
+        "tags" : [ "Students" ],
+        "summary" : "Delete a student by ID",
+        "parameters" : [ {
+          "name" : "studentId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Student deleted successfully"
+          },
+          "404" : {
+            "description" : "Student not found"
           }
         }
       }

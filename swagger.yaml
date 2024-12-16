@@ -230,10 +230,10 @@
   },
   "components" : {
     "schemas" : {
-      "Group" : {
+      "GroupWithoutStudent" : {
         "type" : "object",
         "properties" : {
-          "id" : {
+          "groupId" : {
             "type" : "string"
           },
           "groupName" : {
@@ -245,18 +245,12 @@
           "promotion" : {
             "type" : "string",
             "enum" : [ "G", "H", "J", "K" ]
-          },
-          "students" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/Student"
-            }
           }
         }
       },
       "CreateGroup" : {
         "allOf" : [ {
-          "$ref" : "#/components/schemas/Group"
+          "$ref" : "#/components/schemas/GroupWithoutStudent"
         }, {
           "type" : "object",
           "properties" : {
@@ -269,12 +263,21 @@
           }
         } ]
       },
-      "Student" : {
+      "Group" : {
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "groupId" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "$ref" : "#/components/schemas/CreateGroup"
+        } ]
+      },
+      "CreateStudent" : {
         "type" : "object",
         "properties" : {
-          "id" : {
-            "type" : "string"
-          },
           "name" : {
             "type" : "string"
           },
@@ -290,21 +293,39 @@
             "type" : "string"
           },
           "group" : {
-            "$ref" : "#/components/schemas/Group"
+            "$ref" : "#/components/schemas/CreateStudent_group"
           }
         }
       },
-      "CreateStudent" : {
+      "Student" : {
         "allOf" : [ {
-          "$ref" : "#/components/schemas/Student"
-        }, {
           "type" : "object",
           "properties" : {
-            "group" : {
-              "$ref" : "#/components/schemas/Group"
+            "studentId" : {
+              "type" : "string"
             }
           }
+        }, {
+          "$ref" : "#/components/schemas/CreateStudent"
         } ]
+      },
+      "CreateStudent_group" : {
+        "type" : "object",
+        "properties" : {
+          "groupId" : {
+            "type" : "string"
+          },
+          "groupName" : {
+            "type" : "string"
+          },
+          "groupYear" : {
+            "type" : "string"
+          },
+          "promotion" : {
+            "type" : "string",
+            "enum" : [ "G", "H", "J", "K" ]
+          }
+        }
       }
     }
   }
